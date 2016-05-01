@@ -182,19 +182,40 @@
  *
  */
 
-package cn.sucjcc.bug.bitserver;
+package cn.sucjcc.bug.bitserver.controller;
 
 /**
  * Created by lilujia on 16/5/2.
  */
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import cn.sucjcc.bug.bitserver.Config;
+import com.okcoin.rest.stock.IStockRestApi;
+import com.okcoin.rest.stock.impl.StockRestApi;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication
-public class Application {
+import java.util.concurrent.atomic.AtomicLong;
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+@RestController
+public class ActualTransactionController {
+
+    private static final String template = "Hello, %s!";
+    private final AtomicLong counter = new AtomicLong();
+
+    @RequestMapping(path = "/balance", method = RequestMethod.GET)
+    public String getBalance(@RequestParam(value = "api_key") String api_key,
+                             @RequestParam(value = "secret_key") String secret_key) {
+
+        IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
+
+        try {
+            return stockPost.userinfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
+        }
+        return "{\"error\":true}";
     }
 }

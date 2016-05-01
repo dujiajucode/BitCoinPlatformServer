@@ -182,19 +182,18 @@
  *
  */
 
-package cn.sucjcc.bug.bitserver;
+package com.okcoin.rest;
 
-/**
- * Created by lilujia on 16/5/2.
- */
+public class StringUtil {
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class Application {
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+    public static boolean isEmpty(String str) {
+        if (str == null)
+            return true;
+        String tempStr = str.trim();
+        if (tempStr.length() == 0)
+            return true;
+        if (tempStr.equals("null"))
+            return true;
+        return false;
     }
 }
