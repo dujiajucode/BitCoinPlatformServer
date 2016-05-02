@@ -242,4 +242,23 @@ public class ActualTransactionController {
             return JSON.toJSONString(error);
         }
     }
+
+    @RequestMapping(path = "/at/kline", method = RequestMethod.GET)
+    public String getKline(@RequestParam(value = "api_key") String api_key,
+                           @RequestParam(value = "secret_key") String secret_key,
+                           @RequestParam(value = "size") String orderId,
+                           @RequestParam(value = "since") String since) {
+
+        String symbol = "btc_usd";
+        String type = "1min";
+
+
+        IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
+        try {
+            return stockPost.kline(symbol, type, orderId, since);
+        } catch (Exception e) {
+            Error error = new Error(1004, e.getLocalizedMessage());
+            return JSON.toJSONString(error);
+        }
+    }
 }

@@ -256,6 +256,11 @@ public class StockRestApi implements IStockRestApi {
     private final String ORDER_INFO_URL = "/api/v1/order_info.do";
 
     /**
+     * 现货 获取比特币或莱特币的K线数据URL
+     */
+    private final String KLINE_INFO_URL = "/api/v1/kline.do";
+
+    /**
      * 现货 批量获取用户订单URL
      */
     private final String ORDERS_INFO_URL = "/api/v1/orders_info.do";
@@ -484,6 +489,45 @@ public class StockRestApi implements IStockRestApi {
         String result = httpUtil.requestHttpPost(url_prex, this.ORDER_HISTORY_URL,
                 params);
 
+        return result;
+    }
+
+
+    @Override
+    public String kline(String symbol, String type, String size, String since) throws HttpException, IOException {
+        // 构造参数签名
+
+        String param = "";
+
+        if (!StringUtil.isEmpty(symbol)) {
+            if (!param.equals("")) {
+                param += "&";
+            }
+            param += "symbol=" + symbol;
+        }
+        if (!StringUtil.isEmpty(type)) {
+            if (!param.equals("")) {
+                param += "&";
+            }
+            param += "type=" + type;
+        }
+        if (!StringUtil.isEmpty(size)) {
+            if (!param.equals("")) {
+                param += "&";
+            }
+            param += "size=" + size;
+        }
+        if (!StringUtil.isEmpty(since)) {
+            if (!param.equals("")) {
+                param += "&";
+            }
+            param += "since=" + since;
+        }
+
+
+        // 发送get请求
+        HttpUtilManager httpUtil = HttpUtilManager.getInstance();
+        String result = httpUtil.requestHttpGet(url_prex, this.KLINE_INFO_URL, param);
         return result;
     }
 

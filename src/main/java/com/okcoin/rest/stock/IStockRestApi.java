@@ -315,4 +315,19 @@ public interface IStockRestApi {
     public String order_history(String symbol, String status,
                                 String current_page, String page_length) throws HttpException, IOException;
 
+    /**
+     * 获取比特币或莱特币的K线数据
+     *
+     * @param symbol btc_usd: 比特币 ltc_usd: 莱特币
+     * @param type   1min : 1分钟 3min : 3分钟 5min : 5分钟 15min : 15分钟 30min : 30分钟
+     *               1day : 1日 3day : 3日 1week : 1周 1hour : 1小时 2hour : 2小时 4hour :
+     *               4小时 6hour : 6小时 12hour : 12小时
+     * @param size   指定获取数据的条数
+     * @param since  时间戳（eg：1417536000000）。 返回该时间戳以后的数据
+     * @return
+     * @throws HttpException
+     * @throws IOException
+     */
+    public String kline(String symbol, String type, String size, String since) throws HttpException, IOException;
+
 }
