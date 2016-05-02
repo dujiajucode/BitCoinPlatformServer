@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BitCoinPlatformServer.iml" filepath="$PROJECT_DIR$/.idea/modules/BitCoinPlatformServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BitCoinPlatformServer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/BitCoinPlatformServer_main.iml" group="BitCoinPlatformServer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BitCoinPlatformServer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/BitCoinPlatformServer_test.iml" group="BitCoinPlatformServer" />
+    </modules>
+  </component>
+</project>
