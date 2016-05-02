@@ -189,6 +189,8 @@ package cn.sucjcc.bug.bitserver.controller;
  */
 
 import cn.sucjcc.bug.bitserver.Config;
+import cn.sucjcc.bug.bitserver.model.Error;
+import com.alibaba.fastjson.JSON;
 import com.okcoin.rest.stock.IStockRestApi;
 import com.okcoin.rest.stock.impl.StockRestApi;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -201,21 +203,44 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class ActualTransactionController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping(path = "/balance", method = RequestMethod.GET)
-    public String getBalance(@RequestParam(value = "api_key") String api_key,
-                             @RequestParam(value = "secret_key") String secret_key) {
+    @RequestMapping(path = "/at/trade", method = RequestMethod.POST)
+    public String trade(@RequestParam(value = "api_key") String api_key,
+                        @RequestParam(value = "secret_key") String secret_key,
+                        @RequestParam(value = "type") String type,
+                        @RequestParam(value = "price") String price,
+                        @RequestParam(value = "amount") String amount) {
+
+
+        String symbol = "btc_usd";
 
         IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
 
         try {
-            return stockPost.userinfo();
+            return stockPost.trade(symbol, type,
+                    price, amount);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getLocalizedMessage());
+            Error error = new Error(1002, e.getLocalizedMessage());
+            return JSON.toJSONString(error);
         }
-        return "{\"error\":true}";
+    }
+
+    @RequestMapping(path = "/at/order", method = RequestMethod.GET)
+    public String getOrder(@RequestParam(value = "api_key") String api_key,
+                           @RequestParam(value = "secret_key") String secret_key,
+                           @RequestParam(value = "order_id", defaultValue = "-1") String orderId) {
+
+
+        String symbol = "btc_usd";
+
+
+        IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
+
+        try {
+            return stockPost.order_info(symbol, orderId);
+        } catch (Exception e) {
+            Error error = new Error(1003, e.getLocalizedMessage());
+            return JSON.toJSONString(error);
+        }
     }
 }
