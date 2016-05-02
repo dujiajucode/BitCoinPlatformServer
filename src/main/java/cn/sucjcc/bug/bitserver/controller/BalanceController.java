@@ -188,15 +188,12 @@ package cn.sucjcc.bug.bitserver.controller;
  * Created by lilujia on 16/5/2.
  */
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicLong;
 
 import cn.sucjcc.bug.bitserver.Config;
 import cn.sucjcc.bug.bitserver.model.Error;
 import com.alibaba.fastjson.JSON;
 import com.okcoin.rest.stock.IStockRestApi;
 import com.okcoin.rest.stock.impl.StockRestApi;
-import org.apache.http.HttpException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -204,9 +201,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BalanceController {
-
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping(path = "/balance", method = RequestMethod.GET)
     public String getBalance(@RequestParam(value = "api_key") String api_key,
