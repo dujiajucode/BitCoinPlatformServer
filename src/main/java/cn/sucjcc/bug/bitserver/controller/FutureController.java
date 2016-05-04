@@ -184,13 +184,11 @@
 
 package cn.sucjcc.bug.bitserver.controller;
 
-/**
- * Created by lilujia on 16/5/2.
- */
-
 import cn.sucjcc.bug.bitserver.Config;
 import cn.sucjcc.bug.bitserver.model.Error;
 import com.alibaba.fastjson.JSON;
+import com.okcoin.rest.future.IFutureRestApi;
+import com.okcoin.rest.future.impl.FutureRestApiV1;
 import com.okcoin.rest.stock.IStockRestApi;
 import com.okcoin.rest.stock.impl.StockRestApi;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -198,83 +196,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * Created by lilujia on 16/5/4.
+ */
 @RestController
-public class ActualTransactionController {
+public class FutureController {
 
-
-    @RequestMapping(path = "/at/trade", method = RequestMethod.POST)
-    public String trade(@RequestParam(value = "api_key") String api_key,
-                        @RequestParam(value = "secret_key") String secret_key,
-                        @RequestParam(value = "type") String type,
-                        @RequestParam(value = "price") String price,
-                        @RequestParam(value = "amount") String amount) {
-
-
-        String symbol = "btc_usd";
-
-        IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
-
-        try {
-            return stockPost.trade(symbol, type,
-                    price, amount);
-        } catch (Exception e) {
-            Error error = new Error(1002, e.getLocalizedMessage());
-            return JSON.toJSONString(error);
-        }
-    }
-
-    @RequestMapping(path = "/at/order", method = RequestMethod.GET)
-    public String getOrder(@RequestParam(value = "api_key") String api_key,
-                           @RequestParam(value = "secret_key") String secret_key,
-                           @RequestParam(value = "order_id", defaultValue = "-1") String orderId) {
-
-
-        String symbol = "btc_usd";
-
-
-        IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
-
-        try {
-            return stockPost.order_info(symbol, orderId);
-        } catch (Exception e) {
-            Error error = new Error(1003, e.getLocalizedMessage());
-            return JSON.toJSONString(error);
-        }
-    }
-
-    @RequestMapping(path = "/at/kline", method = RequestMethod.GET)
-    public String getKline(@RequestParam(value = "api_key") String api_key,
-                           @RequestParam(value = "secret_key") String secret_key,
-                           @RequestParam(value = "size") String orderId,
-                           @RequestParam(value = "since") String since) {
-
-        String symbol = "btc_usd";
-        String type = "1min";
-
-
-        IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
-        try {
-            return stockPost.kline(symbol, type, orderId, since);
-        } catch (Exception e) {
-            Error error = new Error(1004, e.getLocalizedMessage());
-            return JSON.toJSONString(error);
-        }
-    }
-
-    @RequestMapping(path = "/at/order/cancel", method = RequestMethod.POST)
-    public String getCancelOrder(@RequestParam(value = "api_key") String api_key,
-                                 @RequestParam(value = "secret_key") String secret_key,
-                                 @RequestParam(value = "order_id") String orderId) {
-
-        String symbol = "btc_usd";
-        IStockRestApi stockPost = new StockRestApi(Config.API_URL, api_key, secret_key);
-        try {
-            return stockPost.cancel_order(symbol, orderId);
-        } catch (Exception e) {
-            Error error = new Error(1005, e.getLocalizedMessage());
-            return JSON.toJSONString(error);
-        }
-    }
 
 }
